@@ -1,0 +1,58 @@
+CODE:
+moduled_flip_flop(
+inputd,clk,rst,
+outputreg q
+);
+always@(posedgeclk)
+begin
+if(rst==1'b1)
+q=0;
+else
+q<=d;
+end
+endmodule
+modulemealy_statemachine(
+inputa,b,x,clk,
+outputda,db,y
+);
+and(y,b,1'b1);
+d_flip_flop d1 (~x,clk,1'b0,da);
+d_flip_flop d2 (x,clk,1'b0,db);
+
+endmodule
+TESTBENCH CODE:
+
+modulemealy_statemachine_test(
+);
+reg a,b,x,clk;
+wireda,db,y;
+mealy_statemachineuut(
+.a(a),
+.b(b),
+.x(x),
+.clk(clk),
+.da(da),
+.db(db),
+.y(y)
+);
+initial begin
+clk=0;
+forever #10 clk=~clk;
+end
+initial begin
+a=0;b=0;
+x=0;
+#100
+x=1;
+#100
+a=0;b=1;
+x=0;
+#100
+x=1;
+#100
+a=1;b=0;
+x=0;
+#100
+x=1;
+end
+endmodule
