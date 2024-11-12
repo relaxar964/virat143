@@ -1,0 +1,38 @@
+Encoder:
+module encoder(s0,s1,s2,s3,s4,s5,s6,s7,d0,d1,d2);
+input s0,s1,s2,s3,s4,s5,s6,s7;
+output d0,d1,d2;
+or(d0,s1,s3,s5,s7);
+or(d1,s2,s3,s6,s7);
+or(d2,s4,s5,s6,s7);
+endmodule
+
+Testbench:
+module encodertb;
+reg s0,s1,s2,s3,s4,s5,s6,s7;
+wire d0;
+wire d1;
+wire d2;
+encoder uut(.s0(s0), .s1(s1), .s2(s2), .s3(s3), .s4(s4), .s5(s5), .s6(s6), .s7(s7) , .d0(d0), .d1(d1),
+.d2(d2));
+initial
+begin
+s0=1; s1=0; s2=0; s3=0; s4=0; s5=0; s6=0; s7=0;
+
+#100; s0=0; s1=1; s2=0; s3=0; s4=0; s5=0; s6=0; s7=0;
+
+#100; s0=0; s1=0; s2=1; s3=0; s4=0; s5=0; s6=0; s7=0;
+
+#100; s0=0; s1=0; s2=0; s3=1; s4=0; s5=0; s6=0; s7=0;
+
+#100; s0=0; s1=0; s2=0; s3=0; s4=1; s5=0; s6=0; s7=0;
+
+#100; s0=0; s1=0; s2=0; s3=0; s4=0; s5=1; s6=0; s7=0;
+
+2018105501 ABDUL KADER SHAFEEQ S
+
+#100; s0=0; s1=0; s2=0; s3=0; s4=0; s5=0; s6=1; s7=0;
+#100; s0=0; s1=0; s2=0; s3=0; s4=0; s5=0; s6=0; s7=1;
+#100;
+end
+endmodule
