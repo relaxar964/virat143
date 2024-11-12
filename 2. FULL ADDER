@@ -1,0 +1,36 @@
+2. FULL ADDER
+fulladder.v
+module fulladder (
+input a,b,cin,
+output reg s,c);
+always @ (a or b or cin)
+begin
+
+end
+s = (a ^ b) ^ cin;
+c = (a & b) + (b & cin) + (cin & a);
+
+endmodule
+
+fulladdertb.v
+module fulladdertb();
+reg a,b,cin;
+wire s,c;
+fulladder dut(
+.a(a),
+.b(b),
+.cin(cin),
+.s(s),
+.c(c));
+initial begin
+a=1’b0; b=1’b0; cin=1’b0; #10;
+a=1’b0; b=1’b0; cin=1’b1; #10;
+a=1’b0; b=1’b1; cin=1’b0; #10;
+a=1’b0; b=1’b1; cin=1’b1; #10;
+a=1’b1; b=1’b0; cin=1’b0; #10;
+a=1’b1; b=1’b0; cin=1’b1; #10;
+a=1’b1; b=1’b1; cin=1’b0; #10;
+a=1’b1; b=1’b1; cin=1’b1; #10;
+$finish;
+end
+endmodule
