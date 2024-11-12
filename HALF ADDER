@@ -1,0 +1,31 @@
+1. HALF ADDER
+halfadder.v
+module halfadder (
+input a, b,
+output reg s, c);
+always @ (a or b)
+begin
+
+end
+endmodule
+
+s = a ^ b;
+c = a & b;
+
+halfaddertb.v
+module halfaddertb();
+reg a,b;
+wire s,c;
+halfadder dut(
+.a(a),
+.b(b),
+.c(c),
+.s(s));
+initial begin
+a=1’b0; b=1’b0; #10;
+a=1’b0; b=1&’; b1; #10;
+a=1’b1; b=1’b0; #10;
+a=1’b1; b=1’b1; #10;
+$finish;
+end
+endmodule
