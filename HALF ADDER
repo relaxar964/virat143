@@ -1,31 +1,104 @@
-1. HALF ADDER
-halfadder.v
-module halfadder (
-input a, b,
-output reg s, c);
-always @ (a or b)
+Code:
+Half adder:
+Data flow:
+module half_addf(output s,c,input a,b);
+assign s=a^b;
+assign c=a&b;
+endmodule
+Structural:
+module half_ad(input a,b,output s,c);
+xor g1(s,a,b);
+and g2(c,a,b);
+endmodule
+Behavioural:
+module half_adbe(s,c,a,b);
+input a,b;
+output reg s,c;
+always @(*)
 begin
+s=a^b;
 
+2018105501 ABDUL KADER SHAFEEQ S
+
+c=a&b;
 end
 endmodule
 
-s = a ^ b;
-c = a & b;
-
-halfaddertb.v
-module halfaddertb();
-reg a,b;
-wire s,c;
-halfadder dut(
+Testbench:
+module half_adbetb;
+reg a;
+reg b;
+wire s;
+wire c;
+half_adbe uut (
 .a(a),
 .b(b),
 .c(c),
-.s(s));
-initial begin
-a=1’b0; b=1’b0; #10;
-a=1’b0; b=1&’; b1; #10;
-a=1’b1; b=1’b0; #10;
-a=1’b1; b=1’b1; #10;
-$finish;
+.s(s)
+);
+initial
+begin
+a=0;b=0;
+#100
+a=0;b=1;
+#100
+a=1;b=0;
+#100
+a=1;b=1;
 end
 endmodule
+
+
+
+Full Adder:
+module full_ad(input a,b,cin,output s,c);
+wire s1;
+wire c1;
+wire c2;
+half_ad h1(s1,c1,a,b);
+half_ad h2(s,c2,s1,cin);
+or (c,c1,c2);
+endmodule
+
+module half_ad(output s,c,input a,b);
+xor g1(s,a,b);
+and g2(c,a,b);
+endmodule
+
+Testbench:
+module full_adtb;
+reg a;
+reg b;
+reg cin;
+wire s;
+wire c;
+full_ad uut(
+.a(a),
+.b(b),
+.cin(cin),
+.s(s),
+.c(c)
+);
+initial
+begin
+a=0;b=0;cin=0;
+#100
+a=0;b=0;cin=1;
+#100
+a=0;b=1;cin=0;
+#100
+a=0;b=1;cin=1;
+#100
+a=1;b=0;cin=0;
+#100
+a=1;b=0;cin=1;
+#100
+a=1;b=1;cin=0;
+#100
+a=1;b=1;cin=1;
+end
+endmodule
+
+
+
+
