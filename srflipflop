@@ -1,0 +1,40 @@
+SR FLIP FLOP
+CODE:
+module SR_FF(
+input s,r,clock,reset,
+output q, qb
+);
+reg q, qb;
+always @ (posedge (clock))
+begin
+if (reset)
+begin
+q <= 0;
+qb <=1;
+end
+else
+begin
+if (s != R)
+begin
+q <= s;
+qb <= R;
+end
+else if (s == 1 && r == 1)
+begin
+q <= 1'bZ;
+qb <= 1'bZ;
+end
+end module
+TEST BENCH CODE:
+initial begin
+s = 0;r = 0; clock = 0; reset = 0;
+#100;
+#100; s=0; r=1; clock=1; reset=0;
+#100; s=1; r=0; clock=0; reset=1;
+#100; s=1; r=1; clock=1; reset=0;
+end
+initial begin
+#100
+$monitor(“clock=%b, reset=%b, S=%b, R=%b, q=%b, qb=%b”, clock, reset, s, r, q,qb)
+end
+endmodule
