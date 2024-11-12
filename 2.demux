@@ -1,0 +1,43 @@
+DEMUX:
+module demux(a,b,c,d,e,f,g,h,y,s0,s1,s2);
+output a,b,c,d,e,f,g,h;
+input y,s0,s1,s2;
+wire s0bar,s1bar,s2bar;
+assign s0bar=~s0, s1bar=~s1, s2bar=~s2;
+assign a=(s2bar & s1bar & s0bar & y);
+assign b=(s2bar & s1bar & s0 & y);
+assign c=(s2bar & s1 & s0bar & y);
+assign d=(s2bar & s1 & s0 & y);
+assign e=(s2 & s1bar & s0bar & y);
+assign f=(s2 & s1bar & s0 & y);
+assign g=(s2 & s1 & s0bar & y);
+assign h=(s2 & s1 & s0 & y);
+endmodule
+
+Testbench:
+module demuxtb;
+reg y,s2,s1,s0;
+wire a,b,c,d,e,f,g,h;
+demux uut(a,b,c,d,e,f,g,h,y,s0,s1,s2);
+initial
+begin
+y=1;s2=0;s1=0;s0=0;
+#100;
+y=1;s2=0;s1=0;s0=1;
+#100;
+y=1;s2=0;s1=1;s0=0;
+
+2018105501 ABDUL KADER SHAFEEQ S
+
+#100;
+y=1;s2=0;s1=1;s0=1;
+#100;
+y=1;s2=1;s1=0;s0=0;
+#100;
+y=1;s2=1;s1=0;s0=1;
+#100;
+y=1;s2=1;s1=1;s0=0;
+#100;
+y=1;s2=1;s1=1;s0=1;
+end
+endmodule
