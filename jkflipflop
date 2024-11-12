@@ -1,0 +1,52 @@
+JK FLIP FLOP:
+CODE:
+Module jk_ff(
+input j,k,clk,
+output reg q, qbar
+);
+always @ (posedge (clock))
+begin
+if (j==0 & k==0)
+begin
+q <= q;
+qbar<=~q;
+end
+else if(j==0 & k==1)
+begin
+q <= 1’b0;
+qbar<= 1’b1;
+end
+else if(j==1 & k==0)
+begin
+q <= 1’b1;
+qbar<= 1’b0;
+end
+else
+begin
+q <= ~q;
+qbar<= q;
+end
+end
+end
+end module
+TEST BENCH CODE:
+module jk_ff_tb();
+reg j,k,clk;
+wire q,qbar;
+jk_ff uut(.q(q),.qbar(qbar),.k(k),.j(j),.clk(clk));
+initial begin
+clk=1’b1;
+j=1’b0;
+k=1’b1;
+#100
+j=1’b1;
+k=1’b0;
+#100
+j=1’b1;
+k=1’b1;
+#100
+j=1’b0;
+k=1’b0;
+end
+always #50 clk=~clk;
+endmodule
