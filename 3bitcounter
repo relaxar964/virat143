@@ -1,0 +1,62 @@
+3-BIT COUNTER:
+SEQUENCE:1 2 5 7 3 4 6 0
+CODE:
+moduledff(
+input D,
+inputclk,
+input reset,
+outputreg Q,
+outputQbar);
+assignQbar=~Q;
+always @(posedgeclk)
+begin
+if(reset==1'b1)
+Q<=1'b0;
+else
+Q<=D
+end
+endmodule
+modulebitcounter(
+input A,
+input B,
+input C,
+inputclk,
+outputda,dabar,db,dbbar,dc,dcbar
+);
+wirerstn;
+wire k=((~A&B)|(A&~B));
+wire k1=((A&~B)|(~B&C)|(A&C));
+wire k2=((A&C)|(~A&~C));
+dff d1(k,clk,1'b0,da,dabar);
+dff d2(k1,clk,1'b0,db,dbbar);
+dff d3(k2,clk,1'b0,dc,dcbar);
+endmodule
+TEST BENCH:
+modulebitcounter_test(
+);
+regclk,A,B,C;
+wireda,db,dc;
+bitcounteruut(
+.A(A),
+.B(B),
+.C(C),
+.da(da),
+.clk(clk),
+.db(db),
+.dc(dc)
+);
+integeri;
+initial begin
+clk=1'b1;
+A=0;
+B=0;
+C=1;
+for(i=0;i<7;i=i+1)
+begin
+#100
+A=da;
+B=db;C=dc;
+end
+end
+always#50 clk=~clk;
+endmodule
